@@ -8,9 +8,12 @@ import retrofit2.Response;
 
 import java.util.List;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,20 +56,34 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_dropdown_item_1line,  list ));
         autoCompleteTextView.setTokenizer(new SpaceTokenizer());
 
-        autoCompleteTextView.setOnKeyListener(new View.OnKeyListener() {
+        autoCompleteTextView.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_TEXT);
+
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View view, int keycode, KeyEvent keyEvent) {
-                switch (keycode){
-                    case KeyEvent.KEYCODE_ENTER:etInput.append("\n ");
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT){
+
+                    int index = autoCompleteTextView.getSelectionStart();
+
+                    Editable edit = autoCompleteTextView.getEditableText();
+                    if (index < 0 || index >= edit.length() ){
+
+                        edit.append("\n ");
+
+                    }else{
+
+                        edit.insert(index,"\n ");//
+
+                    }
+
+
+
+                    return true;
                 }
-                return true;
+                return false;
             }
         });
-
-
-
-
-
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
 
                                 JSONObject responseJson = new JSONObject(response.body().toString());
                                 String output = responseJson.getString("output");
+                                String cpuTime = responseJson.getString("cpuTime");
                                 tvResult.setText(output);
+                                tvResult.append("\ncpuTime :"+cpuTime);
 
                             }else{
 
@@ -120,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     private void settingList(){
         list.add("#include <stdio.h>");
         list.add("#include <time.h>");
@@ -127,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         list.add("#include <stdlib.h>");
         list.add("#include <string.h>");
         list.add("#include <ctype.h>");
-        list.add("int main(void){\n\n}");
+        list.add("int main(void){\n \n}");
         list.add("int");
         list.add("String");
         list.add("char");
@@ -154,6 +174,30 @@ public class MainActivity extends AppCompatActivity {
         list.add("ctime();");
         list.add("ctime64();");
         list.add("ctime_r();");
+        list.add("ctime54_r();");
+        list.add("difftimer();");
+        list.add("difftime64();");
+        list.add("div();");
+        list.add("erf();");
+        list.add("erfc();");
+        list.add("exit();");
+        list.add("exp();");
+        list.add("fabs();");
+        list.add("fclose();");
+        list.add("fdopen();");
+        list.add("feof();");
+        list.add("ferror();");
+        list.add("fflush();");
+        list.add("fgetc();");
+        list.add("fgetpos();");
+        list.add("fgets();");
+        list.add("fgetws();");
+        list.add("fileno();");
+        list.add("floor();");
+        list.add("fmod();");
+        list.add("fopen();");
+        list.add("scanf();");
+
 
         list.add("printf();");
 

@@ -3,6 +3,7 @@ package org.ganymede.minicompiler;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.MultiAutoCompleteTextView;
 
 class SpaceTokenizer implements MultiAutoCompleteTextView.Tokenizer {
@@ -10,7 +11,8 @@ class SpaceTokenizer implements MultiAutoCompleteTextView.Tokenizer {
     @Override
     public int findTokenStart(CharSequence text, int cursor) {
         int i = cursor;
-        while (i > 0 && text.charAt(i - 1) != ' ') {
+
+        while (i > 0 && text.charAt(i - 1) != ' ' ) {
             i--;
         }
 

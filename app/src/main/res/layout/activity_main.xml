@@ -22,7 +22,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:completionThreshold="1" />
+        android:completionThreshold="1"
+        android:inputType="textMultiLine"
+        />
 
     <!--<EditText
         android:id="@+id/et_input"
